@@ -5,21 +5,12 @@ define('USER', 'staff');
 define('PASSWORD', '9999');
 
 // DBに接続
-try {
-    $dbh = new PDO(DSN, USER, PASSWORD);
-    // echo '接続に成功しました！' . '<br>';
-} catch (PDOException $e) {
-    echo '接続がうまくいきませんでした！<br>';
-    echo $e->getMessage();
-    exit;
-}
+$dbh = new PDO(DSN, USER, PASSWORD);
 
 // SQL文の組み立て
-$sql = 'SELECT id, description, type, classifcation, birthplace, birthday 
-        FROM animals ORDER BY id ASC';
+$sql = 'SELECT id, description, type, classifcation, birthplace, birthday FROM animals ORDER BY id ASC';
 
 // プリペアドステートメントの準備
-// $dbh->query($sql) でも良い
 $stmt = $dbh->prepare($sql);
 
 // プリペアドステートメントの実行
@@ -29,12 +20,11 @@ $stmt->execute();
 $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($animals as $animal) {
-    // echo $member['id'] . ' 番<br>'; idで順ソート
-    echo $animal['type'] . 'の' . $animal['classifcation'] . ' ちゃん<br>';
-    echo $animal['description'] . '<br>';
-    echo $animal['birthday'] . ' 生まれ<br>';
-    echo '出身地 ' . $animal['birthplace'] . '<br>';
-    echo '<hr>';
+    echo $animal['type'] . 'の' .
+        $animal['classifcation'] . 'ちゃん' . '<br>' .
+        $animal['description'] . '<br>' .
+        $animal['birthday'] . '生まれ' . '<br>' .
+        '出身地' . $animal['birthplace'] . '<hr>';
 }
 
 // http://localhost/php_exercise/pet_shop/index.php
