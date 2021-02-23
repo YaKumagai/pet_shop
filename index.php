@@ -8,8 +8,9 @@ define('PASSWORD', '9999');
 $dbh = new PDO(DSN, USER, PASSWORD);
 
 // SQL文の組み立て
-$sql = 'SELECT id, description, type, classifcation, birthplace, birthday FROM animals ORDER BY id ASC';
-
+$sql = 'SELECT id, description, type, classifcation, birthplace, birthday ' .
+        'FROM animals ORDER BY id ASC';
+        
 // プリペアドステートメントの準備
 $stmt = $dbh->prepare($sql);
 
