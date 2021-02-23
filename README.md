@@ -6,7 +6,7 @@ CREATE DATABASE pet_shop;
 -- 今回はホストを指定しない
 CREATE USER staff IDENTIFIED BY '9999';
 
--- 「pg_camp」というデータベースの全てのテーブルの操作権限を「staff」に付与。
+-- 「pet_shop」というデータベースの全てのテーブルの操作権限を「staff」に付与。
 GRANT ALL ON pet_shop.* TO staff;
 
 
@@ -20,11 +20,7 @@ CREATE TABLE animals (
     birthday DATE
 );
 
-
-
 -- テストレコードの挿入
-
-
 INSERT INTO animals(description, type, classifcation, birthplace, birthday) VALUES
 ('しわしわお顔にぺちゃ鼻くりくりぱっちり大きな目、愛嬌たっぷり元気な子です！短毛で色はホワイト系にブラックの混色のブルドックです。',1,'ブルドック','神奈川県','2019/11/30'),
 ('非常に美人なノルウェージャンフォレストキャットです！色はホワイト系のブルータービーでふわふわ長毛でおっとりとした性格をしています！',2,'ノルウェージャンフォレストキャット','東京都','2019/12/03'),
