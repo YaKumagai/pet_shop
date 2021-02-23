@@ -5,12 +5,17 @@ define('USER', 'staff');
 define('PASSWORD', '9999');
 
 // DBに接続
-$dbh = new PDO(DSN, USER, PASSWORD);
+try {
+    $dbh = new PDO(DSN, USER, PASSWORD);
+} catch (PDOException $e) {
+    echo $e->getMessage();
+    exit;
+}
 
 // SQL文の組み立て
 $sql = 'SELECT id, description, type, classifcation, birthplace, birthday ' .
         'FROM animals ORDER BY id ASC';
-        
+
 // プリペアドステートメントの準備
 $stmt = $dbh->prepare($sql);
 
