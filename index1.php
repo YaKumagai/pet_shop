@@ -17,7 +17,7 @@ try {
 }
 
 $keyword = '%大%';
-$sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
+$sql = 'SELECT * FROM animals WHERE description LIKE $keyword';
 echo $keyword;
 // プリペアドステートメントの準備
 $stmt = $dbh->prepare($sql);
