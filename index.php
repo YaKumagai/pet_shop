@@ -9,19 +9,19 @@
     <h1>本日のご紹介ペット</h1>
     <form method="get">
         <label>キーワード：</label>
-        <input placeholder="キーワードを入力下さい" size="24" type="text" name="<?= h("keyword") ?>">
+        <input name="<?= h("keyword") ?>" placeholder="キーワードを入力下さい" size="24" type="text">
         <input type="submit" value="検索">
-        <?php echo '「' . $_GET["keyword"] . '」で、曖昧検索しました'; ?>
+        <?php echo '「' . h($_GET["keyword"]) . '」で、曖昧検索しました'; ?>
     </form>
 </body>
 </html>
-
 
 <?php
 // 特殊文字をHTMLエンティティに変換
 function h($str){
     return htmlspecialchars($str,ENT_QUOTES, "UTF-8");
 }
+
 // 接続に必要な情報を定義
 define('DSN', 'mysql:host=db;dbname=pet_shop;charset=utf8;');
 define('USER', 'staff');
@@ -35,7 +35,7 @@ try {
     exit;
 }
 
-$keyword = $_GET["keyword"];
+$keyword = h($_GET["keyword"]);
 if (empty($keyword)) {
     $sql = 'SELECT id, description, type, classifcation, birthplace, birthday ' . 
         'FROM animals ORDER BY id ASC';
@@ -65,4 +65,13 @@ foreach ($animals as $animal) {
         '出身地' . $animal['birthplace'] . '<hr>';
 }
 
+/*
+<script>alert('警告！！！！');</script>
+
+【XSS対策補足】
+htmlspecialchars関数 を利用したことで、<script>alert('警告！！！');</script> は
+コードとして認識されず、文字列として吐き出されたということになります。
+セキュリティはとても重要なことなので必ず理解出来るようにしておきましょう。
+
+*/
 // http://localhost/php_exercise/pet_shop/index.php
