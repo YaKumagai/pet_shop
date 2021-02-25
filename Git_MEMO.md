@@ -13,7 +13,7 @@
 - git branch -M main
 - git push -u origin main
 - git push origin feature
-- 
+- git reset --hard origin/eature2
 - git push origin main
 - git pull origin main
 - git status
