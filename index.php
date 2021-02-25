@@ -27,6 +27,7 @@ if (empty($keyword)) {
     $sql = 'SELECT id, description, type, classifcation, birthplace, birthday ' .
         'FROM animals WHERE description LIKE :keyword ORDER BY id ASC';
 }
+
 // プリペアドステートメントの準備
 $stmt = $dbh->prepare($sql);
 
@@ -47,25 +48,26 @@ $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ペットショップ</title>
 </head>
+
 <body>
     <h1>本日のご紹介ペット</h1>
     <form method="get">
         <label>キーワード：</label>
         <input name="keyword" placeholder="キーワードを入力下さい" size="24" type="text">
         <input type="submit" value="検索">
-        <?php echo '「' . h($_GET["keyword"]) . '」で、曖昧検索しました'; ?>
+        <?= '「' . h($_GET["keyword"]) . '」で、曖昧検索しました'; ?>
     </form>
+
+    <?php // レコードの表示
+    foreach ($animals as $animal) {
+        echo $animal['type'] . 'の' .
+            $animal['classifcation'] . 'ちゃん' . '<br>' .
+            $animal['description'] . '<br>' .
+            $animal['birthday'] . '生まれ' . '<br>' .
+            '出身地' . $animal['birthplace'] . '<hr>';
+    }
+    ?>
 </body>
 </html>
 
-<?php
-// レコードの表示
-foreach ($animals as $animal) {
-    echo $animal['type'] . 'の' .
-        $animal['classifcation'] . 'ちゃん' . '<br>' .
-        $animal['description'] . '<br>' .
-        $animal['birthday'] . '生まれ' . '<br>' .
-        '出身地' . $animal['birthplace'] . '<hr>';
-}
-
-// http://localhost/php_exercise/pet_shop/index.php
+<!-- http://localhost/php_exercise/pet_shop/index.php -->
