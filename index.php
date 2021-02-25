@@ -53,12 +53,12 @@ $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>本日のご紹介ペット</h1>
     <form method="get">
         <label>キーワード：</label>
-        <input name="keyword" placeholder="キーワードを入力下さい" size="24" type="text">
+        <input name="keyword" placeholder="キーワードを入力して下さい" size="24" type="text">
         <input type="submit" value="検索">
         <?= '「' . h($_GET["keyword"]) . '」で、曖昧検索しました'; ?>
     </form>
-
-    <?php // レコードの表示
+    
+    <p><?php // レコードの表示
     foreach ($animals as $animal) {
         echo $animal['type'] . 'の' .
             $animal['classifcation'] . 'ちゃん' . '<br>' .
@@ -66,7 +66,7 @@ $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $animal['birthday'] . '生まれ' . '<br>' .
             '出身地' . $animal['birthplace'] . '<hr>';
     }
-    ?>
+    ?></p>
 </body>
 </html>
 
