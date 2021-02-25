@@ -43,10 +43,13 @@ if (empty($keyword)) {
     // SQL文の組み立て
     $keyword = '%' . $keyword . '%';
     $sql = 'SELECT id, description, type, classifcation, birthplace, birthday ' .
-        'FROM animals WHERE description LIKE $keyword ORDER BY id ASC';
+        'FROM animals WHERE description LIKE :keyword ORDER BY id ASC';
 }
 // プリペアドステートメントの準備
 $stmt = $dbh->prepare($sql);
+
+// パラメータのバインド(プレースホルダへの代入)
+$stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
 
 // プリペアドステートメントの実行
 $stmt->execute();
@@ -55,7 +58,7 @@ $stmt->execute();
 $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($animals as $animal) {
-    echo $animal['type'] . 'の' .
+    echo '<br>' . $animal['type'] . 'の' .
         $animal['classifcation'] . 'ちゃん' . '<br>' .
         $animal['description'] . '<br>' .
         $animal['birthday'] . '生まれ' . '<br>' .
